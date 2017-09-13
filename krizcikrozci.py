@@ -1,5 +1,6 @@
 import tkinter as tk
 import random
+from tkinter import messagebox
 
 class KrizciKrozci:
     def __init__(self, master):
@@ -64,35 +65,35 @@ class KrizciKrozci:
         #preverimo navpicno
         for i in range(0,3):
             if sum(self.polja[i]) == 27: #navpicno so tri polja X (9+9+9)
-                self.label['text']=('!!!2. IGRALEC JE ZMAGAL!!!')
+                tk.messagebox.showinfo("Konec igre!", "2. igralec je zmagal!")
                 self.konec()
             if sum(self.polja[i]) == 3:
-                self.label['text']=('!!!1. IGRALEC JE ZMAGAL!!!')
+                tk.messagebox.showinfo("Konec igre!", "1. igralec je zmagal!")
                 self.konec()
         #preverimo vodoravno
         #matrika spodaj transponira self.polja , da lahko uporabimo seštevek
         self.trans_polja=[[vrstica[i] for vrstica in self.polja] for i in range(3)]
         for i in range(0,3):
             if sum(self.trans_polja[i]) == 27:
-                self.label['text']=('!!!2. IGRALEC JE ZMAGAL!!!')
+                tk.messagebox.showinfo("Konec igre!", "2. igralec je zmagal!")
                 self.konec()
             if sum(self.trans_polja[i]) == 3:
-                self.label['text']=('!!!1. IGRALEC JE ZMAGAL!!!')
+                tk.messagebox.showinfo("Konec igre!", "1. igralec je zmagal!")
                 self.konec()
         #preverimo še diagonalno
         if self.polja[1][1] == 9:
             if self.polja[0][0] == self.polja[1][1] and self.polja[2][2] == self.polja[1][1] :
-                self.label['text'] = ('!!!2. IGRALEC JE ZMAGAL!!!')
+                tk.messagebox.showinfo("Konec igre!", "2. igralec je zmagal!")
                 self.konec()
             if self.polja[0][2] == self.polja[1][1] and self.polja[2][0] == self.polja[1][1] :
-                self.label['text'] = ('!!!2. IGRALEC JE ZMAGAL!!!')
+                tk.messagebox.showinfo("Konec igre!", "2. igralec je zmagal!")
                 self.konec()
         if self.polja[1][1] == 1:
             if self.polja[0][0] == self.polja[1][1] and self.polja[2][2] == self.polja[1][1] :
-                self.label['text'] = ('!!!1. IGRALEC JE ZMAGAL!!!')
+                tk.messagebox.showinfo("Konec igre!", "1. igralec je zmagal!")
                 self.konec()
             if self.polja[0][2] == self.polja[1][1] and self.polja[2][0] == self.polja[1][1] :
-                self.label['text'] = ('!!!1. IGRALEC JE ZMAGAL!!!')
+                tk.messagebox.showinfo("Konec igre!", "1. igralec je zmagal!")
                 self.konec()
         #preveri če je izenačeno
         if self.j == False:
@@ -100,7 +101,7 @@ class KrizciKrozci:
             for i in range(0,3):
                 a+= sum(self.polja[i])
             if a == 41:
-                self.label['text']=("Izenačena sta. \n Poskusita še enkrat!")
+                tk.messagebox.showinfo("Konec igre!", "Izenačena sta. \n Poskusita še enkrat!")
                 self.konec()
 
 root = tk.Tk()
