@@ -3,29 +3,22 @@ import random
 
 class KrizciKrozci:
     def __init__(self, master):
-        self.frame = tk.Frame(master)
-        self.frame.pack(fill='both',expand=True)
-        self.label = tk.Label(self.frame, text='KRIŽCI KROŽCI', font = ("Verdana", "15"), height=3, bg='white', fg='red', borderwidth = 1, relief="solid")
+        self.okvir = tk.Frame(master)
+        self.okvir.pack(fill='both',expand=True)
+        self.label = tk.Label(self.okvir, text='KRIŽCI KROŽCI', font = ("Verdana", "15"), height=3, bg='white', fg='red', borderwidth = 1, relief="solid")
         self.label.pack(fill="both", expand=True)
-        self.canvas = tk.Canvas(self.frame, width = 300, height = 300)
-        self.canvas.pack(fill="both", expand=True)
-        self.frame2 = tk.Frame(self.frame)
-        self.frame2.pack(fill="both", expand=True)
-        self.zacni = tk.Button(self.frame2, text='Klikni za začetek igre!',font = ("Verdana", 12), height=2, command=self.zacetek,bg='white', fg='black')
+        self.polje = tk.Canvas(self.okvir, width = 330, height = 330)
+        self.polje.pack(fill="both", expand=True)
+        self.okvir2 = tk.Frame(self.okvir)
+        self.okvir2.pack(fill="both", expand=True)
+        self.zacni = tk.Button(self.okvir2, text='Klikni za začetek igre!',font = ("Verdana", 12), height=2, command=self.zacetek,bg='white', fg='black')
         self.zacni.pack(fill="both", expand=True)
         self.plosca()
 
-        '''menu = Menu(master)
-        master.config(menu=menu)
-        datoteka = Menu(menu)
-        menu.add_cascade(label='Datoteka', menu=datoteka)
-        datoteka.add_command(label='Shrani igro', command=self.shrani_igro)
-        datoteka.add_command(label="Izhod", command=master.destroy)'''
-
     def zacetek(self):
-        self.canvas.delete(tk.ALL)
+        self.polje.delete(tk.ALL)
         self.label['text'] = ('KRIŽCI KROŽCI')
-        self.canvas.bind("<ButtonPress-1>", self.igraj)
+        self.polje.bind("<ButtonPress-1>", self.igraj)
         self.plosca()
         self.polja=[[0,0,0],[0,0,0],[0,0,0]]
         self.i = 0
@@ -33,35 +26,35 @@ class KrizciKrozci:
 
 
     def konec(self):
-        self.canvas.unbind("<ButtonPress-1>")
+        self.polje.unbind("<ButtonPress-1>")
         self.j=True
 
     def plosca(self):
-        self.canvas.create_rectangle(0, 0, 300, 300, outline="black")
-        self.canvas.create_rectangle(100, 300, 200, 0, outline="black")
-        self.canvas.create_rectangle(0, 100, 300, 200, outline="black")
+        self.polje.create_rectangle(0, 0, 330, 330, outline="black") #celotno polje
+        self.polje.create_rectangle(110, 330, 220, 0, outline="black") #navp pravokotnik
+        self.polje.create_rectangle(0, 110, 330, 220, outline="black") #vod pravokotnik
 
     def igraj(self, koord):
-        for k in range(0, 300, 100):
-            for j in range(0, 300, 100):
-                if koord.x in range(k, k+100) and koord.y in range(j, j+100):
-                    if self.canvas.find_enclosed(k , j, k+100, j+100)== ():
-                        if self.i % 2 == 0:
-                            W= (2*k+100)/2
-                            Z= (2*j+100)/2
-                            W1= int(k/100)
-                            Z1= int(j/100)
-                            self.canvas.create_oval( W+25, Z+25, W-25, Z-25, width=4, outline="black")
+        for m in range(0, 330, 110):
+            for n in range(0, 330, 110):
+                if koord.x in range(m, m+110) and koord.y in range(n, n+110):
+                    if self.polje.find_enclosed(m , n, m+110, n+110) == ():
+                        if self.i % 2 == 0:  #da se igralca menjavata
+                            W= (2*m+110)/2
+                            Z= (2*n+110)/2
+                            W1= int(m/110)
+                            Z1= int(n/110)
+                            self.polje.create_oval( W+25, Z+25, W-25, Z-25, width=4, outline="black") #narise krozec
                             self.polja[Z1][W1] += 1
                             self.i += 1
                             self.label['text'] = 'Na vrsti je 2. igralec'
                         else:
-                            W= (2*k+100)/2
-                            Z= (2*j+100)/2
-                            W1= int(k/100)
-                            Z1= int(j/100)
-                            self.canvas.create_line( W+20, Z+20, W-20, Z-20, width=4, fill="red") #naredi del križca
-                            self.canvas.create_line( W-20, Z+20, W+20, Z-20, width=4, fill="red") #še drug del križca#še drug del križca
+                            W= (2*m+110)/2
+                            Z= (2*n+110)/2
+                            W1= int(m/110)
+                            Z1= int(n/110)
+                            self.polje.create_line( W+25, Z+25, W-25, Z-25, width=4, fill="red") #naredi del križca
+                            self.polje.create_line( W-25, Z+25, W+25, Z-25, width=4, fill="red") #še drug del križca#še drug del križca
                             self.polja[Z1][W1] += 9
                             self.i += 1
                             self.label['text'] = 'Na vrsti je 1. igralec'
