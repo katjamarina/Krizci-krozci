@@ -1,11 +1,10 @@
 import tkinter as tk
-import random
 from tkinter import messagebox
 
 class KrizciKrozci:
     def __init__(self, master):
         self.okvir = tk.Frame(master)
-        self.okvir.pack(fill='both',expand=True)
+        self.okvir.pack(fill='both', expand=True)
         self.label = tk.Label(self.okvir, text='KRIŽCI KROŽCI', font = ("Verdana", "15"), height=3, bg='white', fg='red', borderwidth = 1, relief="solid")
         self.label.pack(fill="both", expand=True)
         self.polje = tk.Canvas(self.okvir, width = 330, height = 330)
@@ -62,16 +61,16 @@ class KrizciKrozci:
         self.preveri()
 
     def preveri(self):
-        #preverimo navpicno
+        #preverimo vodoravno
         for i in range(0,3):
-            if sum(self.polja[i]) == 27: #navpicno so tri polja X (9+9+9)
+            if sum(self.polja[i]) == 27: #vodoravno so tri polja X (9+9+9)
                 tk.messagebox.showinfo("Konec igre!", "2. igralec je zmagal!")
                 self.konec()
             if sum(self.polja[i]) == 3:
                 tk.messagebox.showinfo("Konec igre!", "1. igralec je zmagal!")
                 self.konec()
-        #preverimo vodoravno
-        #matrika spodaj transponira self.polja , da lahko uporabimo seštevek
+        #preverimo navpicno
+        #matrika spodaj transponira self.polja , da lahko sestejemo isto kot prej
         self.trans_polja=[[vrstica[i] for vrstica in self.polja] for i in range(3)]
         for i in range(0,3):
             if sum(self.trans_polja[i]) == 27:
